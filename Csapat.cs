@@ -8,6 +8,9 @@ namespace FootballManager
 {
     public class Csapat
     {
+
+        public int Pont { get; set; }
+
         public string Nev { get; }
         public List<Jatekos> Jatekosok { get; } = new List<Jatekos>();
 

@@ -25,13 +25,9 @@ namespace FootballManager
             for (int i = 0; i < csapatok.Count; i++)
                 Console.WriteLine((i + 1) + ". " + csapatok[i].Nev);
 
-            while (true)
-            {
-                Console.Write("Válassz csapatot (1-" + csapatok.Count + "): ");
-                if (int.TryParse(Console.ReadLine(), out int n) && n >= 1 && n <= csapatok.Count)
-                    return csapatok[n - 1];
-                Console.WriteLine("Érvénytelen választás.");
-            }
+            int n = Bevitel.SzamotKer("Válassz csapatot (1-" + csapatok.Count + "): ", 1, csapatok.Count);
+
+            return csapatok[n - 1];
         }
     }
 }
