@@ -4,6 +4,7 @@ namespace FootballManager
     {
         static void Main(string[] args)
         {
+            //basic skeleton
             new Game().Run();
         }
     }
