@@ -1,0 +1,124 @@
+Pécsi Párducok;Török Zalán;Kapus;65
+Pécsi Párducok;Balog Marcell;Kapus;72
+Pécsi Párducok;Mészáros Roland;Védő;78
+Pécsi Párducok;Hegedűs Roland;Védő;70
+Pécsi Párducok;Antal Noel;Védő;77
+Pécsi Párducok;Vincze Bálint;Védő;76
+Pécsi Párducok;Kovács Dániel;Védő;67
+Pécsi Párducok;Fekete Marcell;Középpályás;65
+Pécsi Párducok;Kovács Noel;Középpályás;71
+Pécsi Párducok;Török Dávid;Középpályás;74
+Pécsi Párducok;Simon Patrik;Középpályás;70
+Pécsi Párducok;Balázs Martin;Csatár;78
+Pécsi Párducok;Magyar Ádám;Csatár;75
+Pécsi Párducok;Fehér Dániel;Csatár;75
+Győri Griffek;Gulyás Attila;Kapus;69
+Győri Griffek;Fodor Gergő;Kapus;65
+Győri Griffek;Balog Gábor;Védő;75
+Győri Griffek;Vass Olivér;Védő;61
+Győri Griffek;Fodor Áron;Védő;66
+Győri Griffek;Szűcs Roland;Védő;62
+Győri Griffek;Csonka Balázs;Védő;68
+Győri Griffek;Magyar Noel;Középpályás;67
+Győri Griffek;Bakos Hunor;Középpályás;67
+Győri Griffek;Vass Barnabás;Középpályás;65
+Győri Griffek;Dudás Vince;Középpályás;70
+Győri Griffek;Lukács Máté;Csatár;69
+Győri Griffek;Mészáros Tamás;Csatár;70
+Győri Griffek;Varga Hunor;Csatár;74
+Debreceni Darvak;Sándor Marcell;Kapus;73
+Debreceni Darvak;Jakab Áron;Kapus;70
+Debreceni Darvak;Balogh Vince;Védő;66
+Debreceni Darvak;Mészáros Balázs;Védő;73
+Debreceni Darvak;Fazekas Szabolcs;Védő;69
+Debreceni Darvak;Szalai Csaba;Védő;69
+Debreceni Darvak;Biró Benedek;Védő;63
+Debreceni Darvak;Szilágyi Roland;Középpályás;69
+Debreceni Darvak;Balog Zalán;Középpályás;71
+Debreceni Darvak;Szalai Benedek;Középpályás;70
+Debreceni Darvak;Juhász Attila;Középpályás;65
+Debreceni Darvak;Rácz Bence;Csatár;72
+Debreceni Darvak;Balogh Szabolcs;Csatár;59
+Debreceni Darvak;Lukács Noel;Csatár;71
+Szegedi Sólymok;Bakos Péter;Kapus;62
+Szegedi Sólymok;Fazekas Noel;Kapus;61
+Szegedi Sólymok;Deák Áron;Védő;64
+Szegedi Sólymok;Sándor Levente;Védő;65
+Szegedi Sólymok;Fekete Zoltán;Védő;70
+Szegedi Sólymok;Bakos Marcell;Védő;64
+Szegedi Sólymok;Fazekas Zalán;Védő;64
+Szegedi Sólymok;Pintér Milán;Középpályás;61
+Szegedi Sólymok;Bálint Vince;Középpályás;63
+Szegedi Sólymok;Balog Richárd;Középpályás;58
+Szegedi Sólymok;Sipos Olivér;Középpályás;71
+Szegedi Sólymok;Juhász Barnabás;Csatár;58
+Szegedi Sólymok;Pintér Bence;Csatár;59
+Szegedi Sólymok;Kovács Bálint;Csatár;58
+Egri Egyszarvúak;Gulyás Dániel;Kapus;64
+Egri Egyszarvúak;Hegedűs Péter;Kapus;64
+Egri Egyszarvúak;Németh Levente;Védő;58
+Egri Egyszarvúak;Gulyás Richárd;Védő;67
+Egri Egyszarvúak;Somogyi Patrik;Védő;65
+Egri Egyszarvúak;Kovács Zoltán;Védő;57
+Egri Egyszarvúak;Katona Noel;Védő;65
+Egri Egyszarvúak;Antal Tamás;Középpályás;66
+Egri Egyszarvúak;Mészáros Vince;Középpályás;63
+Egri Egyszarvúak;Farkas Zalán;Középpályás;64
+Egri Egyszarvúak;Kiss Barnabás;Középpályás;59
+Egri Egyszarvúak;Papp Tamás;Csatár;65
+Egri Egyszarvúak;Hegedűs Gábor;Csatár;67
+Egri Egyszarvúak;Kocsis Martin;Csatár;63
+Soproni Szarvasok;Balogh Hunor;Kapus;65
+Soproni Szarvasok;Juhász Martin;Kapus;65
+Soproni Szarvasok;Molnár Martin;Védő;53
+Soproni Szarvasok;Horváth Dominik;Védő;67
+Soproni Szarvasok;Balázs Patrik;Védő;66
+Soproni Szarvasok;Vincze Máté;Védő;67
+Soproni Szarvasok;Magyar Vince;Védő;53
+Soproni Szarvasok;Boros Gábor;Középpályás;58
+Soproni Szarvasok;Török Balázs;Középpályás;60
+Soproni Szarvasok;Fodor Zsombor;Középpályás;60
+Soproni Szarvasok;Katona Hunor;Középpályás;55
+Soproni Szarvasok;Orsós Krisztián;Csatár;56
+Soproni Szarvasok;László Kristóf;Csatár;60
+Soproni Szarvasok;Kelemen Ádám;Csatár;63
+Miskolci Medvék;Szűcs Levente;Kapus;59
+Miskolci Medvék;Balog Milán;Kapus;54
+Miskolci Medvék;Balog Csaba;Védő;51
+Miskolci Medvék;Bálint Dominik;Védő;65
+Miskolci Medvék;Csonka Péter;Védő;58
+Miskolci Medvék;Kelemen Máté;Védő;58
+Miskolci Medvék;Balog Hunor;Védő;53
+Miskolci Medvék;Hegedűs Hunor;Középpályás;54
+Miskolci Medvék;Farkas Zsombor;Középpályás;65
+Miskolci Medvék;Vass Milán;Középpályás;61
+Miskolci Medvék;Rácz Áron;Középpályás;57
+Miskolci Medvék;Kocsis Dániel;Csatár;59
+Miskolci Medvék;Szilágyi Milán;Csatár;57
+Miskolci Medvék;Takács Norbert;Csatár;56
+Veszprémi Vércsék;Sipos Barnabás;Kapus;55
+Veszprémi Vércsék;Fodor Milán;Kapus;52
+Veszprémi Vércsék;Lukács Vince;Védő;53
+Veszprémi Vércsék;Németh Hunor;Védő;55
+Veszprémi Vércsék;Lukács Richárd;Védő;60
+Veszprémi Vércsék;Molnár Dávid;Védő;61
+Veszprémi Vércsék;Barna Szabolcs;Védő;51
+Veszprémi Vércsék;Fehér Barnabás;Középpályás;58
+Veszprémi Vércsék;Hegedűs Milán;Középpályás;56
+Veszprémi Vércsék;Balázs Zsombor;Középpályás;48
+Veszprémi Vércsék;Biró Csaba;Középpályás;53
+Veszprémi Vércsék;Németh Richárd;Csatár;51
+Veszprémi Vércsék;Somogyi Dávid;Csatár;56
+Veszprémi Vércsék;Fekete Richárd;Csatár;57
+Szabad;Sándor Roland;Kapus;56
+Szabad;Molnár Norbert;Védő;55
+Szabad;Orsós Zsombor;Védő;55
+Szabad;Boros Dominik;Védő;76
+Szabad;Balázs Milán;Középpályás;72
+Szabad;Bogdán Marcell;Középpályás;68
+Szabad;Török Richárd;Középpályás;70
+Szabad;Bálint Ádám;Csatár;61
+Szabad;Dudás Zoltán;Csatár;57
+Szabad;Simon Norbert;Csatár;54
+Szabad;Kovács Barnabás;Védő;79
+Szabad;Hajdu Norbert;Csatár;65
