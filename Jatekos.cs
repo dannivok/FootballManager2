@@ -8,8 +8,9 @@ namespace FootballManager
 {
     public class Jatekos
     {
-        public int Fittseg { get; set; } = 100;
+        public int Fittseg { get; private set; } = 100;
         public bool Kezdo { get; set; }
+        public int TenylegesEro => Ero * (100 + Fittseg) / 200;
 
         public string Nev { get; }
         public Poszt Poszt { get; }
@@ -20,6 +21,18 @@ namespace FootballManager
             Nev = nev;
             Poszt = poszt;
             Ero = ero;
+        }
+
+        public void FittsegFrissit(bool kezdoVolt)
+        {
+            if (kezdoVolt)
+                Fittseg -= 6;
+            else
+                Fittseg += 15;
+
+            if (Fittseg < 0) Fittseg = 0;
+            
+            if (Fittseg > 100) Fittseg = 100;
         }
     }
 }
