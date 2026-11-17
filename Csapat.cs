@@ -29,5 +29,42 @@ namespace FootballManager
             foreach (Jatekos jatekos in Jatekosok.OrderByDescending(j => j.TenylegesEro).Take(11))
                 jatekos.Kezdo = true;
         }
+
+         
+        public int MeccsSzam { get; private set; }
+         
+        public int Gyozelem { get; private set; }
+         
+        public int Dontetlen { get; private set; }
+         
+        public int Vereseg { get; private set; }
+         
+        public int LottGol { get; private set; }
+         
+        public int KapottGol { get; private set; }
+         
+        public int GolKulonbseg => LottGol - KapottGol;
+
+         
+        public void EredmenyRogzit(int lott, int kapott)
+         
+        {
+             
+            MeccsSzam++;
+             
+            LottGol += lott;
+             
+            KapottGol += kapott;
+             
+            if (lott > kapott) { Gyozelem++; Pont += 3; }
+             
+            else if (lott == kapott) { Dontetlen++; Pont += 1; }
+             
+            else Vereseg++;
+             
+        }
+
+
+
     }
 }
