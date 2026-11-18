@@ -15,6 +15,8 @@ namespace FootballManager
 
             foreach (Csapat csapat in csapatok)
                 csapat.KezdoBeallit();
+            csapatok = Betoltes.Beolvas();
+            sorsolas = Sorsolas.Keszit(csapatok);
 
             sajatCsapat = Indulas.CsapatValasztas(csapatok);
 
@@ -32,6 +34,7 @@ namespace FootballManager
 
         private const int OsszesForduloSzam = 14;
         private const int KilepesValasztas = 5;
+        private List<List<Meccs>> sorsolas;
 
         private Random random = new Random();
 
@@ -85,10 +88,9 @@ namespace FootballManager
             GepiKezdoBeallit();
 
 
-            var kevert = csapatok.OrderBy(csapat => random.Next()).ToList();
-            var meccsek = new List<Meccs>();
-            for (int sorszam = 0; sorszam + 1 < kevert.Count; sorszam += 2)
-                meccsek.Add(MeccsJatszik(kevert[sorszam], kevert[sorszam + 1]));
+            List<Meccs> meccsek = sorsolas[lejatszottFordulokSzama];
+            foreach (Meccs meccs in meccsek)
+                MeccsJatszik(meccs);
 
             FittsegFrissitMindenki();
             lejatszottFordulokSzama++;
@@ -102,6 +104,41 @@ namespace FootballManager
             }
             if (lejatszottFordulokSzama == OsszesForduloSzam)
                 SzezonVege();
+        }
+
+        private void MeccsJatszik(Meccs meccs)
+        {
+            Csapat hazai = meccs.Hazai;
+            Csapat vendeg = meccs.Vendeg;
+
+            int hazaiEsely = EselySzamol(hazai.Ero, vendeg.Ero);
+            int vendegEsely = EselySzamol(vendeg.Ero, hazai.Ero);
+
+            for (int helyzet = 0; helyzet < 6; helyzet++)
+            {
+                if (random.Next(100) < hazaiEsely) meccs.HazaiGol++;
+                if (random.Next(100) < vendegEsely) meccs.VendegGol++;
+            }
+            hazai.EredmenyRogzit(meccs.HazaiGol, meccs.VendegGol);
+            vendeg.EredmenyRogzit(meccs.VendegGol, meccs.HazaiGol);
+        }
+
+        private string StatuszSor()
+        {
+            int helyezes = TabellaRendez().IndexOf(sajatCsapat) + 1;
+            string kovetkezoSzoveg = "";
+
+            if (lejatszottFordulokSzama < OsszesForduloSzam)
+            {
+                Meccs kovetkezoMeccs = sorsolas[lejatszottFordulokSzama]
+                    .First(meccs => meccs.Hazai == sajatCsapat || meccs.Vendeg == sajatCsapat);
+                bool hazaiMeccs = kovetkezoMeccs.Hazai == sajatCsapat;
+                Csapat ellenfel = hazaiMeccs ? kovetkezoMeccs.Vendeg : kovetkezoMeccs.Hazai;
+                kovetkezoSzoveg = " | Következő: " + ellenfel.Nev + (hazaiMeccs ? " (hazai)" : " (idegen)");
+            }
+
+            return sajatCsapat.Nev + " | Forduló " + lejatszottFordulokSzama + "/" + OsszesForduloSzam
+                + " | " + helyezes + ". hely | " + sajatCsapat.Pont + " pont" + kovetkezoSzoveg;
         }
 
         private Meccs MeccsJatszik(Csapat hazai, Csapat vendeg)
@@ -128,12 +165,7 @@ namespace FootballManager
         }
 
 
-        private string StatuszSor()
-        {
-            int helyezes = TabellaRendez().IndexOf(sajatCsapat) + 1;
-            return sajatCsapat.Nev + " | Forduló " + lejatszottFordulokSzama + "/" + OsszesForduloSzam
-                + " | " + helyezes + ". hely | " + sajatCsapat.Pont + " pont";
-        }
+        
 
         private void KeretKiir()
         {
@@ -225,5 +257,7 @@ namespace FootballManager
             else ertekeles = Texts.Verdicts[3];
 
         }
+
+
     }
 }

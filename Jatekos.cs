@@ -11,6 +11,7 @@ namespace FootballManager
         public int Fittseg { get; private set; } = 100;
         public bool Kezdo { get; set; }
         public int TenylegesEro => Ero * (100 + Fittseg) / 200;
+        public int Golok { get; set; }
 
         public string Nev { get; }
         public Poszt Poszt { get; }

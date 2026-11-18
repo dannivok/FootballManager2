@@ -19,4 +19,16 @@ namespace FootballManager
             Vendeg = vendeg;
         }
     }
+
+    public class Gol
+    {
+        public int Perc { get; }
+        public Jatekos Lovo { get; }
+
+        public Gol(int perc, Jatekos lovo)
+        {
+            Perc = perc;
+            Lovo = lovo;
+        }
+    }
 }
