@@ -19,7 +19,11 @@ namespace FootballManager
             Nev = nev;
         }
 
-        public int Ero => Jatekosok.Where(j => j.Kezdo).Sum(j => j.TenylegesEro) / 11;
+        public const int JuniorEro = 40;
+        public int JuniorSzam { get; set; }
+
+        public int Ero => (Jatekosok.Where(jatekos => jatekos.Kezdo).Sum(jatekos => jatekos.TenylegesEro)
+                           + JuniorSzam * JuniorEro) / 11;
 
         public void KezdoBeallit()
         {

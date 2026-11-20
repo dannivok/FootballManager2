@@ -15,7 +15,7 @@ namespace FootballManager
 
             foreach (Csapat csapat in csapatok)
                 csapat.KezdoBeallit();
-            csapatok = Betoltes.Beolvas();
+            //csapatok = Betoltes.Beolvas();
             sorsolas = Sorsolas.Keszit(csapatok);
 
             sajatCsapat = Indulas.CsapatValasztas(csapatok);
@@ -126,6 +126,7 @@ namespace FootballManager
                 string jel = (meccs.Hazai == sajatCsapat || meccs.Vendeg == sajatCsapat) ? ">> " : "   ";
                 Console.WriteLine(jel + meccs.Hazai.Nev + " " + meccs.HazaiGol + " - " + meccs.VendegGol + " " + meccs.Vendeg.Nev);
             }
+            SerulesekKezel();
             if (lejatszottFordulokSzama == OsszesForduloSzam)
                 SzezonVege();
         }
@@ -187,17 +188,61 @@ namespace FootballManager
             return Math.Clamp(15 + (sajatEro - ellenfelEro) / 2 + modosito, 5, 40);
         }
 
+        private void KezdoPotol()
+        {
+            int kezdoSzam = sajatCsapat.Jatekosok.Count(jatekos => jatekos.Kezdo);
 
-        
+            List<Jatekos> egeszsegesKispad = sajatCsapat.Jatekosok
+                .Where(jatekos => !jatekos.Kezdo && !jatekos.Serult)
+                .OrderByDescending(jatekos => jatekos.TenylegesEro)
+                .ToList();
+
+            int kispadIndex = 0;
+            while (kezdoSzam < 11 && kispadIndex < egeszsegesKispad.Count)
+            {
+                egeszsegesKispad[kispadIndex].Kezdo = true;
+                kispadIndex++;
+                kezdoSzam++;
+            }
+            sajatCsapat.JuniorSzam = 11 - kezdoSzam;
+            if (sajatCsapat.JuniorSzam > 0)
+                Console.WriteLine("Nincs elég egészséges játékos, a következő meccsen junior áll be (erő " + Csapat.JuniorEro + ").");
+        }
+
+        private void SerulesekKezel()
+        {
+            // A junior csak egy meccsig marad.
+            sajatCsapat.JuniorSzam = 0;
+
+            // A már sérültek közeledtek a gyógyuláshoz.
+            foreach (Jatekos jatekos in sajatCsapat.Jatekosok)
+                jatekos.SerulesCsokkent();
+
+            // Új sérülések: minden kezdő 5% eséllyel.
+            foreach (Jatekos kezdo in sajatCsapat.Jatekosok.Where(jatekos => jatekos.Kezdo).ToList())
+            {
+                if (random.Next(100) < 5)
+                {
+                    int fordulok = random.Next(1, 4);
+                    kezdo.Megserul(fordulok);
+                    Console.WriteLine(kezdo.Nev + " " + Texts.InjuryComments[random.Next(Texts.InjuryComments.Length)]
+                        + " (" + fordulok + " forduló kihagyás)");
+                }
+            }
+
+            KezdoPotol();
+        }
+
 
         private void KeretKiir()
         {
             Console.WriteLine();
-            Console.WriteLine($"{"Név",-22}{"Poszt",-14}{"Erő",5}{"Fittség",9}  Kezdő");
+            Console.WriteLine($"{"Név",-22}{"Poszt",-14}{"Erő",5}{"Fittség",9}  {"Kezdő",-7}{"Sérülés",-10}");
             foreach (Jatekos jatekos in sajatCsapat.Jatekosok)
             {
                 string kezdoSzoveg = jatekos.Kezdo ? "igen" : "nem";
-                Console.WriteLine($"{jatekos.Nev,-22}{jatekos.Poszt,-14}{jatekos.Ero,5}{jatekos.Fittseg + "%",9}  {kezdoSzoveg}");
+                string serulesSzoveg = jatekos.Serult ? jatekos.SerulesFordulo + " fordulóig" : "-";
+                Console.WriteLine($"{jatekos.Nev,-22}{jatekos.Poszt,-14}{jatekos.Ero,5}{jatekos.Fittseg + "%",9}  {kezdoSzoveg,-7}{serulesSzoveg,-10}");
             }
         }
 
@@ -222,6 +267,12 @@ namespace FootballManager
 
                 int be = Bevitel.SzamotKer("Ki jöjjön be? (1-" + kispad.Count + ", 0 = vissza): ", 0, kispad.Count);
                 if (be == 0) return;
+
+                if (kispad[be - 1].Serult)
+                {
+                    Console.WriteLine("Sérült játékos nem lehet kezdő.");
+                    continue;
+                }
 
                 kezdok[le - 1].Kezdo = false;
                 kispad[be - 1].Kezdo = true;

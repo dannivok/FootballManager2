@@ -13,6 +13,9 @@ namespace FootballManager
         public int TenylegesEro => Ero * (100 + Fittseg) / 200;
         public int Golok { get; set; }
 
+        public int SerulesFordulo { get; private set; }
+        public bool Serult => SerulesFordulo > 0;
+
         public string Nev { get; }
         public Poszt Poszt { get; }
         public int Ero { get; }
@@ -41,6 +44,18 @@ namespace FootballManager
             Fittseg += mennyiseg;
 
             if (Fittseg > 100) Fittseg = 100;
+        }
+
+        public void Megserul(int fordulok)
+        {
+            SerulesFordulo = fordulok;
+            Kezdo = false;
+        }
+
+        public void SerulesCsokkent()
+        {
+            if (SerulesFordulo > 0)
+                SerulesFordulo--;
         }
     }
 }
