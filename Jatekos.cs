@@ -35,5 +35,12 @@ namespace FootballManager
             
             if (Fittseg > 100) Fittseg = 100;
         }
+
+        public void FittsegHozzaad(int mennyiseg)
+        {
+            Fittseg += mennyiseg;
+
+            if (Fittseg > 100) Fittseg = 100;
+        }
     }
 }
