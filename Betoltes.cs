@@ -29,7 +29,7 @@ namespace FootballManager
                 string jatekosNev = sorok[1].Trim();
                 if (csapatNev.Length == 0 || jatekosNev.Length == 0) continue;
                 if (csapatNev == "Szabad") continue;
-                if (!int.TryParse(sorok[3].Trim(), out int ero) || ero < 0) continue;
+                if (!int.TryParse(sorok[3].Trim(), out int ero) || ero <= 0) continue;
                 //ne legyen nulla vagy kevesebb az ero az nemjo:((
                 if (!PosztBeolvas(sorok[2].Trim(), out Poszt poszt)) continue;
                 //elhezelyezi a posztokat a jatekosoknak

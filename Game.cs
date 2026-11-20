@@ -11,6 +11,7 @@ namespace FootballManager
             Console.WriteLine();
 
             string menedzserNev = Indulas.NevBekeres();
+            beallitasok = new DifficultyBeallitasok(Indulas.DifficultyBekeres());
             csapatok = Betoltes.Beolvas();
 
             foreach (Csapat csapat in csapatok)
@@ -37,6 +38,7 @@ namespace FootballManager
         private List<List<Meccs>> sorsolas;
 
         private Edzes valasztottEdzes;
+        private DifficultyBeallitasok beallitasok;
 
         private Random random = new Random();
 
@@ -157,20 +159,26 @@ namespace FootballManager
 
             int hazaiModosito = 0;
             int vendegModosito = 0;
+            int hazaiEroBonusz = 0;
+            int vendegEroBonusz = 0;
 
             if (hazai == sajatCsapat)
             {
+                hazaiEroBonusz = beallitasok.SajatEroBonusz;
+                vendegEroBonusz = beallitasok.EllenfelEroBonusz;
                 if (valasztottEdzes == Edzes.Tamadas) hazaiModosito = 5;
                 else if (valasztottEdzes == Edzes.Vedekezes) vendegModosito = -5;
             }
             else if (vendeg == sajatCsapat)
             {
+                vendegEroBonusz = beallitasok.SajatEroBonusz;
+                hazaiEroBonusz = beallitasok.EllenfelEroBonusz;
                 if (valasztottEdzes == Edzes.Tamadas) vendegModosito = 5;
                 else if (valasztottEdzes == Edzes.Vedekezes) hazaiModosito = -5;
             }
 
-            int hazaiEsely = EselySzamol(hazai.Ero, vendeg.Ero, hazaiModosito);
-            int vendegEsely = EselySzamol(vendeg.Ero, hazai.Ero, vendegModosito);
+            int hazaiEsely = EselySzamol(hazai.Ero+hazaiEroBonusz, vendeg.Ero+vendegEroBonusz, hazaiModosito);
+            int vendegEsely = EselySzamol(vendeg.Ero+vendegEroBonusz, hazai.Ero+hazaiEroBonusz, vendegModosito);
 
             for (int helyzet = 0; helyzet < 6; helyzet++)
             {
@@ -218,10 +226,10 @@ namespace FootballManager
             foreach (Jatekos jatekos in sajatCsapat.Jatekosok)
                 jatekos.SerulesCsokkent();
 
-            // Új sérülések: minden kezdő 5% eséllyel.
+            // Új sérülések: minden kezdő 5% eséllyel. (Normal modeon)
             foreach (Jatekos kezdo in sajatCsapat.Jatekosok.Where(jatekos => jatekos.Kezdo).ToList())
             {
-                if (random.Next(100) < 5)
+                if (random.Next(100) < beallitasok.SerulesEsely)
                 {
                     int fordulok = random.Next(1, 4);
                     kezdo.Megserul(fordulok);
@@ -292,7 +300,7 @@ namespace FootballManager
             foreach (Csapat csapat in csapatok)
             {
                 foreach (Jatekos jatekos in csapat.Jatekosok)
-                    jatekos.FittsegFrissit(jatekos.Kezdo);
+                    jatekos.FittsegFrissit(jatekos.Kezdo, beallitasok.FittsegVeszteseg);
             }
         }
 
@@ -329,6 +337,10 @@ namespace FootballManager
             else if (helyezes <= 3) ertekeles = Texts.Verdicts[1];
             else if (helyezes <= 6) ertekeles = Texts.Verdicts[2];
             else ertekeles = Texts.Verdicts[3];
+
+            Console.WriteLine();
+            Console.WriteLine("Helyezésed: " + helyezes + ".");
+            Console.WriteLine(ertekeles);
 
         }
 

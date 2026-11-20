@@ -16,6 +16,8 @@ namespace FootballManager
         public int SerulesFordulo { get; private set; }
         public bool Serult => SerulesFordulo > 0;
 
+        public const int AlapFittsegVeszteseg = 6;
+
         public string Nev { get; }
         public Poszt Poszt { get; }
         public int Ero { get; }
@@ -27,10 +29,10 @@ namespace FootballManager
             Ero = ero;
         }
 
-        public void FittsegFrissit(bool kezdoVolt)
+        public void FittsegFrissit(bool kezdoVolt,int veszteseg=AlapFittsegVeszteseg)
         {
             if (kezdoVolt)
-                Fittseg -= 6;
+                Fittseg -= veszteseg;
             else
                 Fittseg += 15;
 

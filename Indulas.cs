@@ -29,5 +29,14 @@ namespace FootballManager
 
             return csapatok[n - 1];
         }
+
+        public static Difficulty DifficultyBekeres()
+        {
+            Console.WriteLine("[1] Easy");
+            Console.WriteLine("[2] Normal");
+            Console.WriteLine("[3] Hard");
+            int difficultybekeres = Bevitel.SzamotKer("Nehézség: ", 1, 3);
+            return (Difficulty)(difficultybekeres - 1);
+        }
     }
 }
