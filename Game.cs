@@ -16,7 +16,6 @@ namespace FootballManager
 
             foreach (Csapat csapat in csapatok)
                 csapat.KezdoBeallit();
-            //csapatok = Betoltes.Beolvas();
             sorsolas = Sorsolas.Keszit(csapatok);
 
             sajatCsapat = Indulas.CsapatValasztas(csapatok);
@@ -65,8 +64,6 @@ namespace FootballManager
                 {
                     case 1:
                         KovetkezoForduloLejatszik();
-
-                        //FittsegFrissitMindenki();
                         break;
                     case 2:
                         Kezdocsapat();
@@ -106,7 +103,6 @@ namespace FootballManager
             EdzestValaszt();
             GepiKezdoBeallit();
 
-
             List<Meccs> meccsek = sorsolas[lejatszottFordulokSzama];
             foreach (Meccs meccs in meccsek)
                 MeccsJatszik(meccs);
@@ -132,8 +128,14 @@ namespace FootballManager
             if (lejatszottFordulokSzama == OsszesForduloSzam)
                 SzezonVege();
         }
+        // KovetkezoForduloLejatszik: Lejátszik egy teljes fordulót. Választasz edzést
+        // a gépi csapatok összeállítják a kezdőjüket, lemegy az összes meccs, és frissül a fittség
+        // (regenerációnál a saját játékosaid +5-öt kapnak). Utána kiírja az eredményeket
+        // (a saját meccsed elé ">>" kerül), kezeli a sérüléseket, és az utolsó forduló után lezárja a szezont.
 
-       
+
+
+
         private string StatuszSor()
         {
             int helyezes = TabellaRendez().IndexOf(sajatCsapat) + 1;
@@ -151,6 +153,10 @@ namespace FootballManager
             return sajatCsapat.Nev + " | Forduló " + lejatszottFordulokSzama + "/" + OsszesForduloSzam
                 + " | " + helyezes + ". hely | " + sajatCsapat.Pont + " pont" + kovetkezoSzoveg;
         }
+        // StatuszSor: Összerak egy rövid infósort a menü fölé: csapatnév, hányadik forduló van,
+        // hányadik helyen állsz, hány pontod van, és ki a következő ellenfél (hazai vagy idegen pályán).
+
+
 
         private void MeccsJatszik(Meccs meccs)
         {
@@ -187,14 +193,22 @@ namespace FootballManager
             }
             hazai.EredmenyRogzit(meccs.HazaiGol, meccs.VendegGol);
             vendeg.EredmenyRogzit(meccs.VendegGol, meccs.HazaiGol);
-
-            // return meccs;
         }
+        // MeccsJatszik: Lejátszik egy meccset. Ha a te csapatod játszik, beleszámít a nehézségi
+        // bónusz és az edzés (támadás: te többet rúgsz, védekezés: az ellenfél kevesebbet).
+        // Kiszámolja mindkét csapat gólesélyét, aztán 6 helyzetnél "dob": ha bejön, gól.
+        // A végén mindkét csapatnál beírja az eredményt.
+
+
+
 
         private int EselySzamol(int sajatEro, int ellenfelEro,int modosito)
         {
             return Math.Clamp(15 + (sajatEro - ellenfelEro) / 2 + modosito, 5, 40);
         }
+
+
+
 
         private void KezdoPotol()
         {
@@ -216,6 +230,10 @@ namespace FootballManager
             if (sajatCsapat.JuniorSzam > 0)
                 Console.WriteLine("Nincs elég egészséges játékos, a következő meccsen junior áll be (erő " + Csapat.JuniorEro + ").");
         }
+        // KezdoPotol: Ha 11-nél kevesebb a kezdő, a kispadról beteszi a legerősebb egészséges
+        // játékosokat. Ha így sem jön ki a 11, a hiányzó helyekre juniorok állnak be, és erről üzenetet ír ki.
+
+
 
         private void SerulesekKezel()
         {
@@ -240,6 +258,11 @@ namespace FootballManager
 
             KezdoPotol();
         }
+        // SerulesekKezel: Forduló után a sérüléseket intézi. Kiveszi a juniorokat, a sérültek
+        // egy fordulóval közelebb kerülnek a gyógyuláshoz, és minden kezdő kis eséllyel
+        // megsérülhet 1-3 fordulóra (ezt egy vicces szöveggel ki is írja). Végül feltölti a kezdőcsapatot.
+
+
 
 
         private void KeretKiir()
@@ -254,38 +277,46 @@ namespace FootballManager
             }
         }
 
+
+
+
         private void Kezdocsapat()
         {
             while (true)
             {
-                var kezdok = sajatCsapat.Jatekosok.Where(j => j.Kezdo).ToList();
-                var kispad = sajatCsapat.Jatekosok.Where(j => !j.Kezdo).ToList();
+                var kezdok = sajatCsapat.Jatekosok.Where(jatekos => jatekos.Kezdo).ToList();
+                var kispad = sajatCsapat.Jatekosok.Where(jatekos => !jatekos.Kezdo).ToList();
 
                 Console.WriteLine();
                 Console.WriteLine("Kezdők (csapat ereje: " + sajatCsapat.Ero + ")");
-                for (int i = 0; i < kezdok.Count; i++)
-                    Console.WriteLine($"{i + 1,2}. {kezdok[i].Nev,-22}{kezdok[i].Poszt,-14}{kezdok[i].TenylegesEro,4}{kezdok[i].Fittseg + "%",7}");
+                for (int kezdojatekos = 0; kezdojatekos < kezdok.Count; kezdojatekos++)
+                    Console.WriteLine($"{kezdojatekos + 1,2}. {kezdok[kezdojatekos].Nev,-22}{kezdok[kezdojatekos].Poszt,-14}{kezdok[kezdojatekos].TenylegesEro,4}{kezdok[kezdojatekos].Fittseg + "%",7}");
 
                 Console.WriteLine("Kispad");
-                for (int i = 0; i < kispad.Count; i++)
-                    Console.WriteLine($"{i + 1,2}. {kispad[i].Nev,-22}{kispad[i].Poszt,-14}{kispad[i].TenylegesEro,4}{kispad[i].Fittseg + "%",7}");
+                for (int kispadjatekos = 0; kispadjatekos < kispad.Count; kispadjatekos++)
+                    Console.WriteLine($"{kispadjatekos + 1,2}. {kispad[kispadjatekos].Nev,-22}{kispad[kispadjatekos].Poszt,-14}{kispad[kispadjatekos].TenylegesEro,4}{kispad[kispadjatekos].Fittseg + "%",7}");
 
-                int le = Bevitel.SzamotKer("Ki menjen le? (1-" + kezdok.Count + ", 0 = vissza): ", 0, kezdok.Count);
-                if (le == 0) return;
+                int lecserelendojatekos = Bevitel.SzamotKer("Ki menjen le? (1-" + kezdok.Count + ", 0 = vissza): ", 0, kezdok.Count);
+                if (lecserelendojatekos == 0) return;
 
-                int be = Bevitel.SzamotKer("Ki jöjjön be? (1-" + kispad.Count + ", 0 = vissza): ", 0, kispad.Count);
-                if (be == 0) return;
+                int becserelendojatekos = Bevitel.SzamotKer("Ki jöjjön be? (1-" + kispad.Count + ", 0 = vissza): ", 0, kispad.Count);
+                if (becserelendojatekos == 0) return;
 
-                if (kispad[be - 1].Serult)
+                if (kispad[becserelendojatekos - 1].Serult)
                 {
                     Console.WriteLine("Sérült játékos nem lehet kezdő.");
                     continue;
                 }
 
-                kezdok[le - 1].Kezdo = false;
-                kispad[be - 1].Kezdo = true;
+                kezdok[lecserelendojatekos - 1].Kezdo = false;
+                kispad[becserelendojatekos - 1].Kezdo = true;
             }
         }
+        // Kezdocsapat: Itt cserélhetsz. Kiírja a kezdőket és a kispadot, megkérdezi, ki menjen
+        // le és ki jöjjön be, és megcseréli őket. Sérültet nem enged becserélni. A 0 megadásával visszalépsz a menübe.
+
+
+
         private void GepiKezdoBeallit()
         {
             foreach (Csapat csapat in csapatok)
@@ -294,6 +325,9 @@ namespace FootballManager
                     csapat.KezdoBeallit();
             }
         }
+
+
+
 
         private void FittsegFrissitMindenki()
         {
@@ -304,6 +338,8 @@ namespace FootballManager
             }
         }
 
+
+
         private List<Csapat> TabellaRendez()
         {
             return csapatok
@@ -312,6 +348,10 @@ namespace FootballManager
                 .ThenByDescending(csapat => csapat.LottGol)
                 .ToList();
         }
+
+
+
+
 
         private void TabellaKiir()
         {
@@ -324,6 +364,9 @@ namespace FootballManager
                 Console.WriteLine($"{sorszam + 1,9} {csapat.Nev,-20}{csapat.MeccsSzam,7}{csapat.Gyozelem,10}{csapat.Dontetlen,11}{csapat.Vereseg,9}{csapat.LottGol,10}{csapat.KapottGol,12}{csapat.GolKulonbseg,14}{csapat.Pont,6}");
             }
         }
+
+
+
 
         private void SzezonVege()
         {
@@ -343,7 +386,8 @@ namespace FootballManager
             Console.WriteLine(ertekeles);
 
         }
-
+        // SzezonVege: A szezon végén kiírja a végső tabellát, a helyezésedet, és értékel
+        // aszerint, hogy első lettél, dobogós (2-3.), középmezőnyben végeztél (4-6.), vagy hátrébb.
 
     }
 }
